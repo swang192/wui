@@ -288,6 +288,7 @@ const Textbox = ({
           notchedOutline: classes.notchedOutline,
         },
       }}
+      id={label}
       fullWidth
       rows={rows}
       name={name}
@@ -310,7 +311,7 @@ const Textbox = ({
       autoComplete={autoComplete}
       InputLabelProps={inputLabelProps}
       error={Boolean(error)}
-      FormHelperTextProps={{ className: classes.helperText }}
+      FormHelperTextProps={{ className: classes.helperText, 'aria-live': 'assertive' }}
       helperText={error === true ? ' ' : error || helperText || ' '}
     >
       {renderSelectOptions()}
