@@ -1,10 +1,6 @@
 import React, { useRef } from 'react';
-import {
-  createMuiTheme,
-  createGenerateClassName,
-  ThemeProvider,
-  StylesProvider,
-} from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { StylesProvider, createGenerateClassName } from '@material-ui/styles';
 import planHealthMeterGradient from './planHealthMeter';
 
 import { addTypography } from './basics/typography';
@@ -17,7 +13,7 @@ const textboxFocus = '#4c84f5';
 const panelBorder = '#DBDCE2';
 const unselectedTab = '#f4f5f7';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontFamily: ['AvertaPE', 'Roboto'],
   },

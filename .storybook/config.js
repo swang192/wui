@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { configure, addDecorator } from '@storybook/react';
 import theme from '@/theme';
 import { ThemeProvider } from '@material-ui/core/styles';

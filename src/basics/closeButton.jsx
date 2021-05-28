@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = theme => ({
   middlePosition: {},
 
   root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
       bottom: 0,
     },
   },
-}));
+});
 
 /**
  * A styled close button for use in modals. Does not manage state by itself.

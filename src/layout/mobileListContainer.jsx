@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import Hidden from '@material-ui/core/Hidden';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Typography from '@/basics/typography';
 import Spacer from '@/layout/spacer';
@@ -18,17 +18,21 @@ const styles = theme => ({
   },
 });
 
-const MobileListContainer = ({ classes, className, title, children }) => (
-  <div className={classNames(classes.root, className)}>
-    {title && (
-      <Hidden mdUp>
-        <Spacer v={8} />
-        <Typography style={{ fontWeight: 'bold' }}>{title}</Typography>
-      </Hidden>
-    )}
-    {children}
-  </div>
-);
+const MobileListContainer = ({ classes, className, title, children }) => {
+  const hidden = useMediaQuery(theme => theme.breakpoints.up('md'));
+
+  return (
+    <div className={classNames(classes.root, className)}>
+      {title && hidden ? null : (
+        <>
+          <Spacer v={8} />
+          <Typography style={{ fontWeight: 'bold' }}>{title}</Typography>
+        </>
+      )}
+      {children}
+    </div>
+  );
+};
 
 MobileListContainer.propTypes = {
   /** @ignore */

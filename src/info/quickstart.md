@@ -40,7 +40,7 @@ in the `<head>` section of your website.
 A typical installation would resemble this:
 
 ```jsx static
-import React from 'react';
+import * as React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '@bequestinc/wui/theme';
