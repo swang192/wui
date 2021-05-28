@@ -1,8 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import deepmerge from 'deepmerge';
 import PropTypes from 'prop-types';
-import { withTheme } from '@material-ui/core/styles';
+import { withTheme } from '@material-ui/styles';
+import { createTheme } from '@material-ui/core/styles';
 import MuiTypography from '@material-ui/core/Typography';
+
+const defaultTheme = createTheme();
 
 const DEFAULT_COLOR = 'initial';
 
@@ -128,8 +131,6 @@ function findVariant(variant) {
   return key => bodyDefinitions[key].aliases.includes(variant);
 }
 
-const CUSTOM_COLORS = ['disabled'];
-
 class Typography extends React.PureComponent {
   static propTypes = {
     /** MUI theme color */
@@ -139,7 +140,7 @@ class Typography extends React.PureComponent {
     variant: PropTypes.string,
     bold: PropTypes.bool,
     /** @ignore */
-    theme: PropTypes.shape({}).isRequired,
+    theme: PropTypes.shape({}),
 
     /** Number of pixels to indent */
     indentLinesAfterFirst: PropTypes.number,
@@ -154,10 +155,13 @@ class Typography extends React.PureComponent {
     color: DEFAULT_COLOR,
     indentLinesAfterFirst: null,
     display: 'block',
+    theme: defaultTheme,
   };
 
   render() {
     const { color, theme, variant, bold, indentLinesAfterFirst, ...props } = this.props;
+
+    const CUSTOM_COLORS = ['disabled', ...Object.keys(theme.palette.grey)];
 
     const { style: externalStyle, ...rest } = props;
 

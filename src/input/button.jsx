@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import MuiButton from '@material-ui/core/Button';
-import withWidth from '@material-ui/core/withWidth';
 import { withStyles } from '@material-ui/core/styles';
 
 import Spinner from '@/basics/spinner';
+
+import useWidth from '../useWidth';
 
 const verticalPadding = 14;
 const horizontalPadding = 32;
@@ -160,87 +161,90 @@ const styles = theme => ({
   },
 });
 
-class Button extends React.PureComponent {
-  static propTypes = {
-    /** Disables the button and shows a Spinner */
-    processing: PropTypes.bool,
-    noMinWidth: PropTypes.bool,
-    /** @ignore */
-    width: PropTypes.string.isRequired,
-    /** @ignore */
-    classes: PropTypes.shape({}).isRequired,
+const Button = ({
+  /** Disables the button and shows a Spinner */
+  processing,
+  noMinWidth,
+  /** @ignore */
+  classes,
 
-    /** If a function, takes the width of the screen and returns a bool */
-    fullWidth: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-    transparent: PropTypes.bool,
+  /** If a function, takes the width of the screen and returns a bool */
+  fullWidth,
+  transparent,
 
-    /** Show a box-shadow pulsing animation */
-    pulse: PropTypes.bool,
-  };
+  /** Show a box-shadow pulsing animation */
+  pulse,
+  ...rest
+}) => {
+  const width = useWidth();
 
-  static defaultProps = {
-    fullWidth: false,
-    processing: false,
-    noMinWidth: false,
-    transparent: false,
-    pulse: false,
-  };
+  const {
+    labelWrapper,
+    spinner: spinnerClass,
+    noMinWidth: noMinWidthClass,
+    processing: processingClass,
+    transparent: transparentClass,
+    pulse: pulseClass,
+    ...buttonClasses
+  } = classes;
 
-  render() {
-    const {
-      width,
-      fullWidth,
-      noMinWidth,
-      processing,
-      transparent,
-      classes: {
-        labelWrapper,
-        spinner: spinnerClass,
-        noMinWidth: noMinWidthClass,
-        processing: processingClass,
-        transparent: transparentClass,
-        pulse: pulseClass,
-        ...buttonClasses
-      },
-      pulse,
-      ...rest
-    } = this.props;
+  const {
+    children: externalChildren,
+    disabled: externalDisabled,
+    className: externalClassName,
+    ...buttonProps
+  } = rest;
 
-    const {
-      children: externalChildren,
-      disabled: externalDisabled,
-      className: externalClassName,
-      ...buttonProps
-    } = rest;
+  const disabled = externalDisabled || processing;
 
-    const disabled = externalDisabled || processing;
-
-    let actualFullWidth = fullWidth;
-    if (typeof fullWidth === 'function') {
-      actualFullWidth = fullWidth(width);
-    }
-
-    const className = classNames(externalClassName, {
-      [processingClass]: processing,
-      [noMinWidthClass]: noMinWidth,
-      [transparentClass]: transparent,
-      [pulseClass]: pulse,
-    });
-
-    return (
-      <MuiButton
-        {...buttonProps}
-        disabled={disabled}
-        className={className}
-        classes={buttonClasses}
-        fullWidth={actualFullWidth}
-      >
-        {processing && <Spinner className={spinnerClass} />}
-
-        <span className={labelWrapper}>{externalChildren}</span>
-      </MuiButton>
-    );
+  let actualFullWidth = fullWidth;
+  if (typeof fullWidth === 'function') {
+    actualFullWidth = fullWidth(width);
   }
-}
 
-export default withStyles(styles)(withWidth()(Button));
+  const className = classNames(externalClassName, {
+    [processingClass]: processing,
+    [noMinWidthClass]: noMinWidth,
+    [transparentClass]: transparent,
+    [pulseClass]: pulse,
+  });
+
+  return (
+    <MuiButton
+      {...buttonProps}
+      disabled={disabled}
+      className={className}
+      classes={buttonClasses}
+      fullWidth={actualFullWidth}
+    >
+      {processing && <Spinner className={spinnerClass} />}
+
+      <span className={labelWrapper}>{externalChildren}</span>
+    </MuiButton>
+  );
+};
+
+Button.propTypes = {
+  /** Disables the button and shows a Spinner */
+  processing: PropTypes.bool,
+  noMinWidth: PropTypes.bool,
+  /** @ignore */
+  classes: PropTypes.shape({}).isRequired,
+
+  /** If a function, takes the width of the screen and returns a bool */
+  fullWidth: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+  transparent: PropTypes.bool,
+
+  /** Show a box-shadow pulsing animation */
+  pulse: PropTypes.bool,
+};
+
+Button.defaultProps = {
+  fullWidth: false,
+  processing: false,
+  noMinWidth: false,
+  transparent: false,
+  pulse: false,
+};
+
+export default withStyles(styles)(Button);

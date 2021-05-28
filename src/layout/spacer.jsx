@@ -1,6 +1,5 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
-import Hidden from '@material-ui/core/Hidden';
 
 export default class Spacer extends React.PureComponent {
   static propTypes = {
@@ -13,6 +12,8 @@ export default class Spacer extends React.PureComponent {
     /** Sets `display: inline-flex` */
     inline: PropTypes.bool,
     content: PropTypes.node,
+
+    hidden: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -20,27 +21,26 @@ export default class Spacer extends React.PureComponent {
     v: 0,
     content: null,
     inline: false,
+    hidden: false,
   };
 
   render() {
-    const { inline, content, v: vertical, h: horizontal, ...hiddenProps } = this.props;
+    const { inline, content, v: vertical, h: horizontal, hidden } = this.props;
 
     const display = inline ? 'inline-flex' : 'flex';
 
-    return (
-      <Hidden {...hiddenProps}>
-        <span
-          style={{
-            display,
-            height: vertical,
-            width: horizontal,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {content}
-        </span>
-      </Hidden>
+    return hidden ? null : (
+      <span
+        style={{
+          display,
+          height: vertical,
+          width: horizontal,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {content}
+      </span>
     );
   }
 }

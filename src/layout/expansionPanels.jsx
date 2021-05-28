@@ -1,9 +1,9 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import MuiAccordion from '@material-ui/core/Accordion';
+import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
+import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 import ExclusivePanelGroup from './exclusivePanelGroup';
@@ -24,7 +24,7 @@ const panelStyles = {
     margin: [[0, 0, 20, 0]],
   },
 };
-const StyledPanel = withStyles(panelStyles)(MuiExpansionPanel);
+const StyledPanel = withStyles(panelStyles)(MuiAccordion);
 
 const summaryStyles = theme => ({
   // Used internally to modify other styles
@@ -40,7 +40,7 @@ const summaryStyles = theme => ({
     },
   },
 });
-const StyledSummary = withStyles(summaryStyles)(MuiExpansionPanelSummary);
+const StyledSummary = withStyles(summaryStyles)(MuiAccordionSummary);
 
 StyledSummary.defaultProps = {
   ...StyledSummary.defaultProps,
@@ -56,7 +56,7 @@ const detailStyles = theme => ({
     },
   },
 });
-const StyledDetails = withStyles(detailStyles)(MuiExpansionPanelDetails);
+const StyledDetails = withStyles(detailStyles)(MuiAccordionDetails);
 
 const iconPanelStyles = theme => ({
   root: {
@@ -100,9 +100,9 @@ const IconPanelExport = withStyles(iconPanelStyles)(IconPanel);
 
 export {
   ExclusivePanelGroup,
-  StyledPanel as ExpansionPanel,
-  StyledSummary as ExpansionPanelSummary,
-  StyledDetails as ExpansionPanelDetails,
+  StyledPanel as Accordion,
+  StyledSummary as AccordionSummary,
+  StyledDetails as AccordionDetails,
   IconPanelExport as IconPanel,
   defaultExpandIcon,
 };
